@@ -1,0 +1,521 @@
+﻿<!--<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妇女节专属祝福</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #messages {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>妇女节专属祝福</h2>
+        <p>亲爱的妈妈，为了给您专属的祝福，请输入验证密码：</p>
+        <input type="password" id="inputPassword" placeholder="请输入密码">
+        <button onclick="checkPassword()">验证</button>
+        <div id="inputFields" style="display: none;">
+            <label for="my称呼">我对您的称呼:</label>
+            <input type="text" id="my称呼">
+            <label for="your姓氏">您的姓氏:</label>
+            <input type="text" id="your姓氏">
+            <label for="feature">描述您的一个特征:</label>
+            <input type="text" id="feature">
+            <button onclick="showMessages()">生成祝福</button>
+        </div>
+        <div id="messages"></div>
+    </div>
+
+    <script>
+        const correctPassword = "mom123";
+        let currentMessageIndex = 0;
+        let currentCharIndex = 0;
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('inputPassword').value;
+            if (inputPassword === correctPassword) {
+                document.getElementById('inputFields').style.display = 'block';
+                document.getElementById('inputPassword').disabled = true;
+            } else {
+                alert('密码错误，无法查看专属祝福。');
+            }
+        }
+
+        function typeMessage() {
+            // 提前获取输入框的值，避免多次获取
+            const myCall = document.getElementById('my称呼').value;
+            const yourSurname = document.getElementById('your姓氏').value;
+            const feature = document.getElementById('feature').value;
+
+            const messages = [
+                `亲爱的${myCall}，妇女节快乐!感谢您的无私付出，愿您健康快乐，永远年轻美丽!`,
+                `${myCall}，您作为${feature}的${yourSurname}女士，是我心中永远的女神，妇女节快乐，愿您笑口常开，幸福常伴!`,
+                `${myCall}，感谢您用爱撑起这个家，妇女节快乐，愿您被岁月温柔以待!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如春风般温暖，如花朵般美丽，幸福常伴!`,
+                `${myCall}，您是我生命中最重要的人，妇女节快乐，愿您健康平安，永远幸福!`,
+                `${myCall}，感谢您的养育之恩，妇女节快乐，愿您笑靥如花，岁月无忧!`,
+                `${myCall}，妇女节快乐!愿您如阳光般温暖，生活如诗如画!`,
+                `${myCall}，您作为${feature}姓的${yourSurname}女士，是我永远的依靠，妇女节快乐，愿您健康快乐，青春永驻!`,
+                `${myCall}，感谢您无私的爱，妇女节快乐，愿您被幸福包围，被爱环绕!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如星星般闪耀，生活充满幸福与希望!`,
+                `${myCall}，您是我心中最美的女神，妇女节快乐，愿您笑口常开，幸福常伴!`,
+                `${myCall}，感谢您用爱点亮我的世界，妇女节快乐，愿您健康平安，永远年轻!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如花朵般绽放，生活充满幸福与温暖!`,
+                `${myCall}，您作为${feature}姓的${yourSurname}女士，是我生命中的光，妇女节快乐，愿您笑靥如花，岁月静好!`,
+                `${myCall}，感谢您一直以来的陪伴与支持，妇女节快乐，愿您健康快乐，永远幸福!`,
+                `${myCall},感恩十八年前的你，永远爱你`
+            ];
+
+            const messagesDiv = document.getElementById('messages');
+            const currentMessage = messages[currentMessageIndex];
+
+            if (currentMessage) {
+                if (currentCharIndex < currentMessage.length) {
+                    const p = document.getElementById('messageParagraph') || document.createElement('p');
+                    p.textContent += currentMessage[currentCharIndex];
+                    if (!document.getElementById('messageParagraph')) {
+                        messagesDiv.appendChild(p);
+                        p.id = 'messageParagraph';
+                    }
+                    currentCharIndex++;
+                    setTimeout(typeMessage, 50);
+                } else {
+                    // 一条消息显示完后，清除当前段落的 id，以便下一条消息重新创建
+                    const p = document.getElementById('messageParagraph');
+                    if (p) {
+                        p.id = '';
+                    }
+                    currentMessageIndex++;
+                    currentCharIndex = 0;
+                    if (currentMessageIndex < messages.length) {
+                        // 消息间的间隔时间
+                        setTimeout(typeMessage, 1000);
+                    }
+                }
+            }
+        }
+
+        function showMessages() {
+            document.getElementById('messages').innerHTML = '';
+            currentMessageIndex = 0;
+            currentCharIndex = 0;
+            setTimeout(typeMessage, 0);
+        }
+    </script>
+</body>
+
+</html>-->
+<!--<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妇女节专属祝福</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #messages {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>妇女节专属祝福</h2>
+        <p>亲爱的妈妈，为了给您专属的祝福，请输入验证密码：</p>
+        <input type="password" id="inputPassword" placeholder="请输入密码">
+        <button onclick="checkPassword()">验证</button>
+        <div id="inputFields" style="display: none;">
+            <label for="my称呼">我对您的称呼:</label>
+            <input type="text" id="my称呼">
+            <label for="your姓氏">您的姓氏:</label>
+            <input type="text" id="your姓氏">
+            <label for="feature">描述您的一个特征:</label>
+            <input type="text" id="feature">
+            <button onclick="showMessages()">生成祝福</button>
+        </div>
+        <div id="messages"></div>
+    </div>-->
+<!-- 添加音频元素，修改src路径 -->
+<!--<audio id="myAudio" loop>
+        <source src="F:/音乐/小幸运.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+    <button id="mediaPlayBtn">播放内容</button>
+
+    <script>
+        const correctPassword = "mom123";
+        let currentMessageIndex = 0;
+        let currentCharIndex = 0;
+
+        // 获取按钮和音频元素
+        const mediaPlayBtn = document.getElementById('mediaPlayBtn');
+        const myAudio = document.getElementById('myAudio');
+
+        // 为按钮添加点击事件监听器
+        mediaPlayBtn.addEventListener('click', function () {
+            myAudio.play().catch(error => {
+                console.log('播放音乐失败:', error);
+            });
+        });
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('inputPassword').value;
+            if (inputPassword === correctPassword) {
+                document.getElementById('inputFields').style.display = 'block';
+                document.getElementById('inputPassword').disabled = true;
+            } else {
+                alert('密码错误，无法查看专属祝福。');
+            }
+        }
+
+        function typeMessage() {
+            // 提前获取输入框的值，避免多次获取
+            const myCall = document.getElementById('my称呼').value;
+            const yourSurname = document.getElementById('your姓氏').value;
+            const feature = document.getElementById('feature').value;
+
+            const messages = [
+                `亲爱的${myCall}，妇女节快乐!感谢您的无私付出，愿您健康快乐，永远年轻美丽!`,
+                `${myCall}，您作为${feature}的${yourSurname}女士，是我心中永远的女神，妇女节快乐，愿您笑口常开，幸福常伴!`,
+                `${myCall}，感谢您用爱撑起这个家，妇女节快乐，愿您被岁月温柔以待!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如春风般温暖，如花朵般美丽，幸福常伴!`,
+                `${myCall}，您是我生命中最重要的人，妇女节快乐，愿您健康平安，永远幸福!`,
+                `${myCall}，感谢您的养育之恩，妇女节快乐，愿您笑靥如花，岁月无忧!`,
+                `${myCall}，妇女节快乐!愿您如阳光般温暖，生活如诗如画!`,
+                `${myCall}，您作为${feature}姓的${yourSurname}女士，是我永远的依靠，妇女节快乐，愿您健康快乐，青春永驻!`,
+                `${myCall}，感谢您无私的爱，妇女节快乐，愿您被幸福包围，被爱环绕!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如星星般闪耀，生活充满幸福与希望!`,
+                `${myCall}，您是我心中最美的女神，妇女节快乐，愿您笑口常开，幸福常伴!`,
+                `${myCall}，感谢您用爱点亮我的世界，妇女节快乐，愿您健康平安，永远年轻!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如花朵般绽放，生活充满幸福与温暖!`,
+                `${myCall}，您作为${feature}姓的${yourSurname}女士，是我生命中的光，妇女节快乐，愿您笑靥如花，岁月静好!`,
+                `${myCall}，感谢您一直以来的陪伴与支持，妇女节快乐，愿您健康快乐，永远幸福!`,
+                `${myCall},感恩十八年前的你，永远爱你`
+            ];
+
+            const messagesDiv = document.getElementById('messages');
+            const currentMessage = messages[currentMessageIndex];
+
+            if (currentMessage) {
+                if (currentCharIndex < currentMessage.length) {
+                    const p = document.getElementById('messageParagraph') || document.createElement('p');
+                    p.textContent += currentMessage[currentCharIndex];
+                    if (!document.getElementById('messageParagraph')) {
+                        messagesDiv.appendChild(p);
+                        p.id = 'messageParagraph';
+                    }
+                    currentCharIndex++;
+                    setTimeout(typeMessage, 50);
+                } else {
+                    // 一条消息显示完后，清除当前段落的 id，以便下一条消息重新创建
+                    const p = document.getElementById('messageParagraph');
+                    if (p) {
+                        p.id = '';
+                    }
+                    currentMessageIndex++;
+                    currentCharIndex = 0;
+                    if (currentMessageIndex < messages.length) {
+                        // 消息间的间隔时间
+                        setTimeout(typeMessage, 1000);
+                    }
+                }
+            }
+        }
+
+        function showMessages() {
+            document.getElementById('messages').innerHTML = '';
+            currentMessageIndex = 0;
+            currentCharIndex = 0;
+            setTimeout(typeMessage, 0);
+        }
+    </script>
+</body>
+
+</html>-->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妇女节专属祝福</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #messages {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>妇女节专属祝福</h2>
+        <p>亲爱的妈妈，为了给您专属的祝福，请输入验证密码：</p>
+        <input type="password" id="inputPassword" placeholder="请输入密码">
+        <button onclick="checkPassword()">验证</button>
+        <div id="inputFields" style="display: none;">
+            <label for="my称呼">我对您的称呼:</label>
+            <input type="text" id="my称呼">
+            <label for="your姓氏">您的姓氏:</label>
+            <input type="text" id="your姓氏">
+            <label for="feature">描述您的一个特征:</label>
+            <input type="text" id="feature">
+            <button onclick="showMessages()">生成祝福</button>
+        </div>
+        <div id="messages"></div>
+    </div>
+    <!-- 添加音频元素，修改src路径 -->
+    <audio id="myAudio" loop>
+        <source src="audio/小幸运.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+
+    <script>
+        const correctPassword = "mom123";
+        let currentMessageIndex = 0;
+        let currentCharIndex = 0;
+        const myAudio = document.getElementById('myAudio');
+
+        // 尝试自动播放
+        myAudio.play().catch(error => {
+            console.log('自动播放失败，等待用户交互后播放', error);
+            document.addEventListener('click', function handleClick() {
+                myAudio.play().catch(playError => {
+                    console.log('用户交互后播放仍失败', playError);
+                });
+                document.removeEventListener('click', handleClick);
+            });
+        });
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('inputPassword').value;
+            if (inputPassword === correctPassword) {
+                document.getElementById('inputFields').style.display = 'block';
+                document.getElementById('inputPassword').disabled = true;
+            } else {
+                alert('密码错误，无法查看专属祝福。');
+            }
+        }
+
+        function typeMessage() {
+            // 提前获取输入框的值，避免多次获取
+            const myCall = document.getElementById('my称呼').value;
+            const yourSurname = document.getElementById('your姓氏').value;
+            const feature = document.getElementById('feature').value;
+
+            const messages = [
+                `亲爱的${myCall}，妇女节快乐!感谢您的无私付出，愿您健康快乐，永远年轻美丽!`,
+                `${myCall}，您作为${feature}的${yourSurname}女士，是我心中永远的女神，妇女节快乐，愿您笑口常开，幸福常伴!`,
+                `${myCall}，感谢您用爱撑起这个家，妇女节快乐，愿您被岁月温柔以待!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如春风般温暖，如花朵般美丽，幸福常伴!`,
+                `${myCall}，您是我生命中最重要的人，妇女节快乐，愿您健康平安，永远幸福!`,
+                `${myCall}，感谢您的养育之恩，妇女节快乐，愿您笑靥如花，岁月无忧!`,
+                `${myCall}，妇女节快乐!愿您如阳光般温暖，生活如诗如画!`,
+                `${myCall}，您作为${feature}姓的${yourSurname}女士，是我永远的依靠，妇女节快乐，愿您健康快乐，青春永驻!`,
+                `${myCall}，感谢您无私的爱，妇女节快乐，愿您被幸福包围，被爱环绕!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如星星般闪耀，生活充满幸福与希望!`,
+                `${myCall}，您是我心中最美的女神，妇女节快乐，愿您笑口常开，幸福常伴!`,
+                `${myCall}，感谢您用爱点亮我的世界，妇女节快乐，愿您健康平安，永远年轻!`,
+                `亲爱的${myCall}，妇女节快乐!愿您如花朵般绽放，生活充满幸福与温暖!`,
+                `${myCall}，您作为${feature}姓的${yourSurname}女士，是我生命中的光，妇女节快乐，愿您笑靥如花，岁月静好!`,
+                `${myCall}，感谢您一直以来的陪伴与支持，妇女节快乐，愿您健康快乐，永远幸福!`,
+                `${myCall},感恩十八年前的你，永远爱你`
+            ];
+
+            const messagesDiv = document.getElementById('messages');
+            const currentMessage = messages[currentMessageIndex];
+
+            if (currentMessage) {
+                if (currentCharIndex < currentMessage.length) {
+                    const p = document.getElementById('messageParagraph') || document.createElement('p');
+                    p.textContent += currentMessage[currentCharIndex];
+                    if (!document.getElementById('messageParagraph')) {
+                        messagesDiv.appendChild(p);
+                        p.id = 'messageParagraph';
+                    }
+                    currentCharIndex++;
+                    setTimeout(typeMessage, 50);
+                } else {
+                    // 一条消息显示完后，清除当前段落的 id，以便下一条消息重新创建
+                    const p = document.getElementById('messageParagraph');
+                    if (p) {
+                        p.id = '';
+                    }
+                    currentMessageIndex++;
+                    currentCharIndex = 0;
+                    if (currentMessageIndex < messages.length) {
+                        // 消息间的间隔时间
+                        setTimeout(typeMessage, 1000);
+                    }
+                }
+            }
+        }
+
+        function showMessages() {
+            document.getElementById('messages').innerHTML = '';
+            currentMessageIndex = 0;
+            currentCharIndex = 0;
+            setTimeout(typeMessage, 0);
+        }
+    </script>
+</body>
+
+</html>
